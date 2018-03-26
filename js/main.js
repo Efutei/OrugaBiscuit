@@ -5,7 +5,8 @@ var ASSETS = {
   image: {
     startImage: './img/startImage.jpg',
     oruga: './img/oruga.jpg',
-    biscuit: './img/biscuit.jpg'
+    biscuit: './img/biscuit.jpg',
+    antenna: './img/antenna.jpg'
   }
 };
 var SCREEN_WIDTH  = 465;
@@ -84,6 +85,8 @@ phina.define('MainScene', {
     this.gauge = PowerGauge().addChildTo(this);
     this.oruga = Oruga().addChildTo(this);
     this.popBiscuit();
+    //this.antenna = Antenna().addChildTo(this);
+    //this.antenna.thrown();
   },
   update: function(){
   },
@@ -172,6 +175,27 @@ phina.define('PowerGauge', {
     if(this.value <= 0){
       this.value = 0;
     }
+  }
+});
+
+phina.define('Antenna', {
+  superClass: 'Sprite',
+  init: function(){
+    this.superInit('antenna', 100, 100);
+    this.setPosition();
+  },
+  update: function(){
+    this.thrown(1);
+  },
+  thrown: function(power){
+    this.antennaTime += 0.1;
+    this.x += Math.cos(this.antennaTime)*20;
+    this.y += Math.sin(this.antennaTime)*20;
+  },
+  setPosition: function(){
+    this.x = 90;
+    this.y = SCREEN_HEIGHT - 150;
+    this.antennaTime = 2/3*Math.PI;
   }
 });
 
