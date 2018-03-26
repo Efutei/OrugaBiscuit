@@ -156,7 +156,7 @@ phina.define('MainScene', {
   },
   popBiscuit: function () {
     this.biscuit = Biscuit().addChildTo(this);
-    var x = 240, y = 170, rnd1 = Math.random() * Math.PI * 2, rnd2 = Math.random();
+    var x = 300, y = 170, rnd1 = Math.random() * Math.PI * 2, rnd2 = Math.random();
     this.biscuit.x = x + Math.cos(rnd1) * 100 * rnd2;
     this.biscuit.y = y + Math.sin(rnd1) * 125 * rnd2;
     /*this.biscuit.x = Random.randint(140, 340);
