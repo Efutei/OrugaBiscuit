@@ -12,6 +12,7 @@ var ASSETS = {
 };
 var SCREEN_WIDTH = 465;
 var SCREEN_HEIGHT = 665;
+var score = 0;
 
 phina.define('StartImage', {
   superClass: 'Sprite',
@@ -88,6 +89,7 @@ phina.define('MainScene', {
     this.oruga = Oruga().addChildTo(this);
     this.popBiscuit();
     this.antenna = Antenna().addChildTo(this);
+    this.scoreText = ScoreText().addChildTo(this);
   },
   update: function (app) {
     var p = app.pointer;
@@ -223,6 +225,21 @@ phina.define('Antenna', {
       return true;
     }
     return false;
+  }
+});
+
+phina.define('ScoreText',{
+  superClass: 'Label',
+
+  init: function(){
+    this.superInit();
+    this.x = SCREEN_WIDTH - (this.width + 70);
+    this.y = 50;
+    this.fill = "#D24F60";
+  },
+  update: function(){
+    this.text = "Score: " + score + " ";
+    this.x = SCREEN_WIDTH - (this.width + 40);
   }
 });
 
