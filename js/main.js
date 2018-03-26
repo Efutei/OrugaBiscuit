@@ -4,7 +4,7 @@ phina.globalize();
 var ASSETS = {
   image: {
     startImage: './img/orugaface.png',
-    oruga: './img/oruga_sprite_1.png',
+    oruga: './img/oruga_sprite.png',
     biscuit: './img/sweets_biscuit.png',
     antenna: './img/antenna.jpg',
     bgImg: './img/bgraido.png'
