@@ -117,7 +117,6 @@ phina.define('Biscuit', {
   }
 });
 
-var powerValue = 50;
 phina.define('PowerGauge', {
   superClass: 'CircleGauge',
   init: function(){
@@ -126,12 +125,43 @@ phina.define('PowerGauge', {
     this.y = SCREEN_HEIGHT - 130;
     this.radius = 120;
     this.maxValue = 100;
-    this.value = 0;
+    this.value = 100;
     this.fill = 'skyblue';
     this.stroke = 'silver';
     this.strokeWidth = 5;
+    this.gaugeUp = false;
   },
   update: function(){
+    this.gaugeCharge();
+  },
+  gaugeCharge: function(){
+    if(this.isFull()){
+      this.gaugeUp = false;
+    }
+    if(this.isEmpty()){
+      this.gaugeUp = true;
+    }
+    if(this.gaugeUp){
+      this.addValue();
+    }else{
+      this.lessValue();
+    }
+  },
+  addValue: function(){
+    if(this.value <= 100){
+      this.value += 3;
+    }
+    if(this.value >= 100){
+      this.value = 100;
+    }
+  },
+  lessValue: function(){
+    if(this.value >= 0){
+      this.value -= 3;
+    }
+    if(this.value <= 0){
+      this.value = 0;
+    }
   }
 });
 
