@@ -142,11 +142,17 @@ phina.define('MainScene', {
   update: function (app) {
     var p = app.pointer;
     if (p.getPointingStart() && !isAntennaThrown) {
-      this.oruga.throw();
+      this.clicked();
     }
     if(this.antenna.checkHit(this.biscuit.x, this.biscuit.y)){
       this.biscuit.remove();
     }
+  },
+  clicked: function(){
+    isAntennaThrown = true;
+    this.oruga.throw();
+    this.antenna.setPosition();
+    this.antenna.setPower(this.gauge.checkValue());
   },
   popBiscuit: function () {
     this.biscuit = Biscuit().addChildTo(this);
@@ -215,7 +221,9 @@ phina.define('PowerGauge', {
     this.gaugeUp = false;
   },
   update: function () {
-    this.gaugeCharge();
+    if(!isAntennaThrown){
+      this.gaugeCharge();
+    }
   },
   gaugeCharge: function () {
     if (this.isFull()) {
@@ -245,6 +253,9 @@ phina.define('PowerGauge', {
     if (this.value <= 0) {
       this.value = 0;
     }
+  },
+  checkValue: function(){
+    return this.value / 100;
   }
 });
 
@@ -254,13 +265,15 @@ phina.define('Antenna', {
     this.superInit('antenna', 140, 140);
     this.setPosition();
     this.charged();
+    this.power = 1;
+    this.speed = 1;
   },
   update: function () {
-    if(this.x == 60&&false){
+    if(this.x == 60 && !isAntennaThrown){
       this.charged();
     }
-    if(true){
-      this.thrown(1);
+    if(isAntennaThrown){
+      this.thrown(this.power, this.speed);
     }
   },
   thrown: function (power, speed) {
@@ -291,7 +304,7 @@ phina.define('Antenna', {
   },
   charged: function(){
     this.x = 60;
-    this.y = SCREEN_HEIGHT - 310;
+    this.y = SCREEN_HEIGHT - 253;
     this.tweener
     .to({
       x: 120
@@ -300,6 +313,9 @@ phina.define('Antenna', {
       x: 60
     },200,"swing")
     .play();
+  },
+  setPower: function(power){
+    this.power = power;
   }
 });
 
