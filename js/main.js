@@ -62,6 +62,7 @@ var SCREEN_WIDTH = 465;
 var SCREEN_HEIGHT = 665;
 var score = 0;
 var isAntennaThrown = false;
+var getBiscket = false;
 
 phina.define('StartImage', {
   superClass: 'Sprite',
@@ -148,6 +149,7 @@ phina.define('MainScene', {
     this.antenna.scaleY = 0.5;
     this.scoreText = ScoreText().addChildTo(this);
     isAntennaThrown = false;
+    getBiscuit = false;
   },
   update: function (app) {
     var p = app.pointer;
@@ -159,6 +161,10 @@ phina.define('MainScene', {
       }
     }
     if(this.antenna.checkHit(this.biscuit.x, this.biscuit.y)){
+      if(!getBiscket){
+        score += 1;
+        getBiscuit = true;
+      }
       this.biscuit.remove();
     }
   },
@@ -170,8 +176,11 @@ phina.define('MainScene', {
   },
   clickCatch: function(){
     this.animOruga.gotoAndPlay('oruga_catch');
-    this.antenna.goTofinger();
-    isAntennaThrown = false;
+    if(this.antenna.x > 175 && this.antenna.x < 225){
+      this.antenna.goTofinger();
+      isAntennaThrown = false;
+      getBiscket = false;
+    }
   },
   popBiscuit: function () {
     this.biscuit = Biscuit().addChildTo(this);
@@ -216,8 +225,8 @@ phina.define('Biscuit', {
 phina.define('BiscuitSpace', {
   superClass: 'Sprite',
   init: function () {
-    this.superInit('biscuit', 200, 250);
-    this.x = 240;
+    this.superInit('biscuit', 50, 250);
+    this.x = 200;
     this.y = 170;
   }
 });
