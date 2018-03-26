@@ -237,7 +237,8 @@ phina.define('Antenna', {
       this.thrown(1);
     }
   },
-  thrown: function (power) {
+  thrown: function (power, speed) {
+    if (!speed) speed = 1;
     var deg = -Math.PI / 180 * 55;
     var x = Math.cos(Math.PI * 1.2 + Math.PI * this.antennaCnt / 32) * 210,
         y = Math.sin(Math.PI * 1.2 + Math.PI * this.antennaCnt / 32) * 140;
@@ -246,11 +247,11 @@ phina.define('Antenna', {
     xx += 270, yy *= power, yy += 280 + (1 - power) * 150;
     if (this.antennaCnt < 51) {
       this.x = xx, this.y = yy;
-    } else if (this.antennaCnt >= 51) {
-      if (this.antennaCnt == 51) this.vx = xx - this.x, this.vy = yy - this.y;
+    } else if ((this.antennaCnt | 0) >= 51) {
+      if ((this.antennaCnt | 0) == 51) this.vx = xx - this.x, this.vy = yy - this.y;
       this.x += this.vx, this.y += this.vy;
     }
-    this.antennaCnt++;
+    this.antennaCnt += speed;
   },
   setPosition: function () {
     this.antennaCnt = 0;
