@@ -64,7 +64,7 @@ phina.define('TitleScene', {
             text: params.title,
             fill: params.fontColor,
             stroke: null,
-            fontSize: 58,
+            fontSize: 72,
           },
           x: this.gridX.center(),
           y: this.gridY.span(2.2),
@@ -81,7 +81,7 @@ phina.define('TitleScene', {
               text: "TOUCH START",
               fill: params.fontColor,
               stroke: null,
-              fontSize: 32,
+              fontSize: 48,
             },
             x: this.gridX.center(),
             y: this.gridY.span(14.5),
@@ -283,7 +283,9 @@ phina.define('ScoreText',{
     this.superInit();
     this.x = SCREEN_WIDTH - (this.width + 70);
     this.y = 50;
-    this.fill = "#D24F60";
+    this.fill = "#FFFFFF";
+    this.stroke = 'black';
+    this.strokeWidth = 3;
   },
   update: function(){
     this.text = "Score: " + score + " ";
@@ -300,8 +302,8 @@ phina.main(function () {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     assets: ASSETS,
-    fontColor: '#FCF5F7',
-    backgroundColor: '#715454',
+    fontColor: '#663333',
+    backgroundColor: '#009966',
   });
   //iphone用ダミー音
   app.domElement.addEventListener('touchend', function dummy() {
