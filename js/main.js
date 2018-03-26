@@ -88,7 +88,11 @@ phina.define('MainScene', {
     //this.antenna = Antenna().addChildTo(this);
     //this.antenna.thrown();
   },
-  update: function(){
+  update: function(app){
+    var p = app.pointer;
+    if(p.getPointingStart()){
+      this.oruga.throw();
+    }
   },
   popBiscuit: function(){
     this.biscuit = Biscuit().addChildTo(this);
@@ -107,7 +111,7 @@ phina.define('Oruga', {
   update: function(){
   },
   throw: function(){
-    return 0;
+    console.log("throw");
   },
   charge: function(){
     return 0;
