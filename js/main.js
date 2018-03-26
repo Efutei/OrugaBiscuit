@@ -9,12 +9,12 @@ var ASSETS = {
     antenna: './img/antenna.jpg'
   }
 };
-var SCREEN_WIDTH  = 465;
+var SCREEN_WIDTH = 465;
 var SCREEN_HEIGHT = 665;
 
 phina.define('StartImage', {
   superClass: 'Sprite',
-  init: function(){
+  init: function () {
     this.superInit('startImage', 396, 428);
     this.x = SCREEN_WIDTH / 2;
     this.y = SCREEN_WIDTH / 2 + 113;
@@ -26,7 +26,7 @@ phina.define('TitleScene', {
   /**
    * @constructor
    */
-  init: function(params) {
+  init: function (params) {
     this.superInit(params);
 
     params = ({}).$safe(params, phina.game.TitleScene.defaults);
@@ -67,7 +67,7 @@ phina.define('TitleScene', {
         },
       });
 
-      this.on('pointend', function() {
+      this.on('pointend', function () {
         this.exit();
       });
     }
@@ -78,23 +78,22 @@ phina.define('TitleScene', {
 // MainScene クラスを定義
 phina.define('MainScene', {
   superClass: 'DisplayScene',
-  init: function() {
+  init: function () {
     this.superInit();
     // 背景色を指定
     this.backgroundColor = '#0F0';
     this.gauge = PowerGauge().addChildTo(this);
     this.oruga = Oruga().addChildTo(this);
     this.popBiscuit();
-    //this.antenna = Antenna().addChildTo(this);
-    //this.antenna.thrown();
+    this.antenna = Antenna().addChildTo(this);
   },
-  update: function(app){
+  update: function (app) {
     var p = app.pointer;
-    if(p.getPointingStart()){
+    if (p.getPointingStart()) {
       this.oruga.throw();
     }
   },
-  popBiscuit: function(){
+  popBiscuit: function () {
     this.biscuit = Biscuit().addChildTo(this);
     this.biscuit.x = Random.randint(140, 340);
     this.biscuit.y = Random.randint(45, 295);
@@ -103,31 +102,31 @@ phina.define('MainScene', {
 
 phina.define('Oruga', {
   superClass: 'Sprite',
-  init: function(){
+  init: function () {
     this.superInit('oruga', 80, 200);
     this.x = 90;
     this.y = SCREEN_HEIGHT - 100;
   },
-  update: function(){
+  update: function () {
   },
-  throw: function(){
+  throw: function () {
     console.log("throw");
   },
-  charge: function(){
+  charge: function () {
     return 0;
   }
 });
 
 phina.define('Biscuit', {
   superClass: 'Sprite',
-  init: function(){
+  init: function () {
     this.superInit('biscuit', 100, 100);
   }
 });
 
 phina.define('BiscuitSpace', {
   superClass: 'Sprite',
-  init: function(){
+  init: function () {
     this.superInit('biscuit', 200, 250);
     this.x = 240;
     this.y = 170;
@@ -136,7 +135,7 @@ phina.define('BiscuitSpace', {
 
 phina.define('PowerGauge', {
   superClass: 'CircleGauge',
-  init: function(){
+  init: function () {
     this.superInit();
     this.x = SCREEN_WIDTH - 200;
     this.y = SCREEN_HEIGHT - 120;
@@ -148,35 +147,35 @@ phina.define('PowerGauge', {
     this.strokeWidth = 5;
     this.gaugeUp = false;
   },
-  update: function(){
+  update: function () {
     this.gaugeCharge();
   },
-  gaugeCharge: function(){
-    if(this.isFull()){
+  gaugeCharge: function () {
+    if (this.isFull()) {
       this.gaugeUp = false;
     }
-    if(this.isEmpty()){
+    if (this.isEmpty()) {
       this.gaugeUp = true;
     }
-    if(this.gaugeUp){
+    if (this.gaugeUp) {
       this.addValue();
-    }else{
+    } else {
       this.lessValue();
     }
   },
-  addValue: function(){
-    if(this.value <= 100){
+  addValue: function () {
+    if (this.value <= 100) {
       this.value += 3;
     }
-    if(this.value >= 100){
+    if (this.value >= 100) {
       this.value = 100;
     }
   },
-  lessValue: function(){
-    if(this.value >= 0){
+  lessValue: function () {
+    if (this.value >= 0) {
       this.value -= 3;
     }
-    if(this.value <= 0){
+    if (this.value <= 0) {
       this.value = 0;
     }
   }
@@ -184,27 +183,30 @@ phina.define('PowerGauge', {
 
 phina.define('Antenna', {
   superClass: 'Sprite',
-  init: function(){
+  init: function () {
     this.superInit('antenna', 100, 100);
     this.setPosition();
   },
-  update: function(){
+  update: function () {
     this.thrown(1);
   },
-  thrown: function(power){
-    this.antennaTime += 0.1;
-    this.x += Math.cos(this.antennaTime)*20;
-    this.y += Math.sin(this.antennaTime)*20;
+  thrown: function (power) {
+    var deg = -Math.PI / 180 * 45;
+    var x = Math.cos(Math.PI + Math.PI * this.antennaCnt / 30) * 180,
+        y = Math.sin(Math.PI + Math.PI * this.antennaCnt / 30) * 110;
+    var xx = Math.cos(deg) * x - Math.sin(deg) * y,
+        yy = Math.sin(deg) * x + Math.cos(deg) * y;
+    xx += 270, yy *= power, yy += 280 + (1 - power) * 150;
+    this.x = xx, this.y = yy;
+    this.antennaCnt++;
   },
-  setPosition: function(){
-    this.x = 90;
-    this.y = SCREEN_HEIGHT - 150;
-    this.antennaTime = 2/3*Math.PI;
+  setPosition: function () {
+    this.antennaCnt = 0;
   }
 });
 
 // メイン処理
-phina.main(function() {
+phina.main(function () {
   // アプリケーション生成
   var app = GameApp({
     title: 'オルガとビスケット',
