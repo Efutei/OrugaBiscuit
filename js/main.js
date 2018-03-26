@@ -94,6 +94,9 @@ phina.define('MainScene', {
     if (p.getPointingStart()) {
       this.oruga.throw();
     }
+    if(this.antenna.checkHit(this.biscuit.x, this.biscuit.y)){
+
+    }
   },
   popBiscuit: function () {
     this.biscuit = Biscuit().addChildTo(this);
@@ -213,6 +216,13 @@ phina.define('Antenna', {
   },
   setPosition: function () {
     this.antennaCnt = 0;
+  },
+  checkHit: function(x, y){
+    this.distance = Math.sqrt(Math.pow(this.x - x,2) + Math.pow(this.y - y,2));
+    if(this.distance < 30){
+      return true;
+    }
+    return false;
   }
 });
 
