@@ -5,7 +5,7 @@ var ASSETS = {
   image: {
     startImage: './img/startImage.jpg',
     oruga: './img/oruga.jpg',
-    biscuit: './img/biscuit.jpg',
+    biscuit: './img/sweets_biscuit.png',
     antenna: './img/antenna.jpg'
   }
 };
