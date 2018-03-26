@@ -31,6 +31,11 @@ var ASSETS = {
           "next": null, // 次のアニメーション
           "frequency": 2, // アニメーション間隔
         },
+        "oruga_catch": { // アニメーション名
+          "frames": [10,9,8,7,6], // フレーム番号範囲
+          "next": "oruga_charge", // 次のアニメーション
+          "frequency": 2, // アニメーション間隔
+        },
       }
     },
     "antenna":
@@ -146,18 +151,27 @@ phina.define('MainScene', {
   },
   update: function (app) {
     var p = app.pointer;
-    if (p.getPointingStart() && !isAntennaThrown) {
-      this.clicked();
+    if (p.getPointingStart()) {
+      if(!isAntennaThrown){
+        this.clickThrow();
+      }else{
+        this.clickCatch();
+      }
     }
     if(this.antenna.checkHit(this.biscuit.x, this.biscuit.y)){
       this.biscuit.remove();
     }
   },
-  clicked: function(){
+  clickThrow: function(){
     isAntennaThrown = true;
     this.animOruga.gotoAndPlay('oruga_throw');
     this.antenna.setPosition();
     this.antenna.setPower(this.gauge.checkValue());
+  },
+  clickCatch: function(){
+    this.animOruga.gotoAndPlay('oruga_catch');
+    this.antenna.goTofinger();
+    isAntennaThrown = false;
   },
   popBiscuit: function () {
     this.biscuit = Biscuit().addChildTo(this);
@@ -186,7 +200,7 @@ phina.define('Oruga', {
     this.y = SCREEN_HEIGHT - 125;
   },
   update: function () {
-  }
+  },
   charge: function () {
     return 0;
   }
@@ -318,6 +332,15 @@ phina.define('Antenna', {
   },
   setPower: function(power){
     this.power = power;
+  },
+  goTofinger: function(){
+    this.tweener
+    .clear()
+    .to({
+      x: 60,
+      y: SCREEN_HEIGHT - 253
+    },400,"swing")
+    .play();
   }
 });
 
