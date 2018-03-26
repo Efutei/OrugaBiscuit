@@ -4,10 +4,30 @@ phina.globalize();
 var ASSETS = {
   image: {
     startImage: './img/orugaface.png',
-    oruga: './img/oruga.jpg',
+    oruga: './img/oruga_sprite.png',
     biscuit: './img/sweets_biscuit.png',
     antenna: './img/antenna.jpg',
     bgImg: './img/bgraido.png'
+  },
+  spritesheet: {
+    "oruga":
+    {
+      // フレーム情報
+      "frame": {
+        "width": 210, // 1フレームの画像サイズ（横）
+        "height": 399, // 1フレームの画像サイズ（縦）
+        "cols": 6, // フレーム数（横）
+        "rows": 1, // フレーム数（縦）
+      },
+      // アニメーション情報
+      "animations" : {
+        "oruga_charge": { // アニメーション名
+          "frames": [0,1,2,3,4,5], // フレーム番号範囲
+          "next": "oruga_charge", // 次のアニメーション
+          "frequency": 2, // アニメーション間隔
+        },
+      }
+    }
   }
 };
 var SCREEN_WIDTH = 465;
@@ -44,7 +64,7 @@ phina.define('TitleScene', {
             text: params.title,
             fill: params.fontColor,
             stroke: null,
-            fontSize: 58,
+            fontSize: 72,
           },
           x: this.gridX.center(),
           y: this.gridY.span(2.2),
@@ -61,7 +81,7 @@ phina.define('TitleScene', {
               text: "TOUCH START",
               fill: params.fontColor,
               stroke: null,
-              fontSize: 32,
+              fontSize: 48,
             },
             x: this.gridX.center(),
             y: this.gridY.span(14.5),
@@ -87,6 +107,11 @@ phina.define('MainScene', {
     this.bg = Bg().addChildTo(this);
     this.gauge = PowerGauge().addChildTo(this);
     this.oruga = Oruga().addChildTo(this);
+    this.animOruga = FrameAnimation('oruga').attachTo(this.oruga);
+    this.animOruga.gotoAndPlay('oruga_charge');
+    this.oruga.scaleX = 0.8;
+    this.oruga.scaleY = 0.8;
+    console.log(this.animOruga);
     this.popBiscuit();
     this.antenna = Antenna().addChildTo(this);
     this.scoreText = ScoreText().addChildTo(this);
@@ -120,7 +145,7 @@ phina.define('Oruga', {
   superClass: 'Sprite',
   init: function () {
     this.superInit('oruga', 80, 200);
-    this.x = 90;
+    this.x = 140;
     this.y = SCREEN_HEIGHT - 100;
   },
   update: function () {
@@ -136,7 +161,7 @@ phina.define('Oruga', {
 phina.define('Biscuit', {
   superClass: 'Sprite',
   init: function () {
-    this.superInit('biscuit', 100, 100);
+    this.superInit('biscuit', 80, 80);
   }
 });
 
@@ -153,9 +178,9 @@ phina.define('PowerGauge', {
   superClass: 'CircleGauge',
   init: function () {
     this.superInit();
-    this.x = SCREEN_WIDTH - 200;
+    this.x = SCREEN_WIDTH - 120;
     this.y = SCREEN_HEIGHT - 120;
-    this.radius = 100;
+    this.radius = 60;
     this.maxValue = 100;
     this.value = 100;
     this.fill = 'skyblue';
@@ -200,11 +225,17 @@ phina.define('PowerGauge', {
 phina.define('Antenna', {
   superClass: 'Sprite',
   init: function () {
-    this.superInit('antenna', 100, 100);
+    this.superInit('antenna', 80, 80);
     this.setPosition();
+    this.charged();
   },
   update: function () {
-    this.thrown(1);
+    if(this.x == 60){
+      this.charged();
+    }
+    if(false){
+      this.thrown(1);
+    }
   },
   thrown: function (power, speed) {
     if (!speed) speed = 1;
@@ -231,6 +262,18 @@ phina.define('Antenna', {
       return true;
     }
     return false;
+  },
+  charged: function(){
+    this.x = 60;
+    this.y = SCREEN_HEIGHT - 310;
+    this.tweener
+    .to({
+      x: 120
+    },200,"swing")
+    .to({
+      x: 60
+    },200,"swing")
+    .play();
   }
 });
 
@@ -241,7 +284,9 @@ phina.define('ScoreText',{
     this.superInit();
     this.x = SCREEN_WIDTH - (this.width + 70);
     this.y = 50;
-    this.fill = "#D24F60";
+    this.fill = "#FFFFFF";
+    this.stroke = 'black';
+    this.strokeWidth = 3;
   },
   update: function(){
     this.text = "Score: " + score + " ";
@@ -258,8 +303,8 @@ phina.main(function () {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     assets: ASSETS,
-    fontColor: '#FCF5F7',
-    backgroundColor: '#715454',
+    fontColor: '#663333',
+    backgroundColor: '#009966',
   });
   //iphone用ダミー音
   app.domElement.addEventListener('touchend', function dummy() {
