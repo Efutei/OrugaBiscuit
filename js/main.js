@@ -7,7 +7,7 @@ var ASSETS = {
     oruga: './img/oruga.jpg',
     biscuit: './img/sweets_biscuit.png',
     antenna: './img/antenna.jpg',
-    bgImg: './img/bgimg.jpg'
+    bgImg: './img/bgraido.png'
   }
 };
 var SCREEN_WIDTH = 465;
