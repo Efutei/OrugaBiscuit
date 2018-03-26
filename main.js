@@ -80,17 +80,18 @@ phina.define('MainScene', {
   init: function() {
     this.superInit();
     // 背景色を指定
-    this.backgroundColor = '#444';
+    this.backgroundColor = '#0F0';
     this.gauge = PowerGauge().addChildTo(this);
+    this.oruga = Oruga().addChildTo(this);
   },
 });
 
 phina.define('Oruga', {
   superClass: 'Sprite',
   init: function(){
-    this.superInit('oruga', 100, 100);
-    this.x = 30;
-    this.y = SCREEN_HEIGHT - 30;
+    this.superInit('oruga', 120, 250);
+    this.x = 110;
+    this.y = SCREEN_HEIGHT - 130;
   },
   update: function(){
   },
@@ -116,19 +117,17 @@ phina.define('Biscuit', {
   }
 });
 
+var powerValue = 50;
 phina.define('PowerGauge', {
-  superClass: 'Gauge',
+  superClass: 'CircleGauge',
   init: function(){
     this.superInit();
-    this.x = SCREEN_WIDTH - 120;
-    this.y = SCREEN_HEIGHT - 90;
-    this.width = 160;
-    this.height = 20;
-    this.cornerRadius = 10;
+    this.x = SCREEN_WIDTH - 140;
+    this.y = SCREEN_HEIGHT - 130;
+    this.radius = 120;
     this.maxValue = 100;
     this.value = 0;
-    this.fill = 'white';
-    this.gaugeColor = 'skyblue';
+    this.fill = 'skyblue';
     this.stroke = 'silver';
     this.strokeWidth = 5;
   },
