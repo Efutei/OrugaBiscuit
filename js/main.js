@@ -6,7 +6,8 @@ var ASSETS = {
     startImage: './img/startImage.jpg',
     oruga: './img/oruga.jpg',
     biscuit: './img/sweets_biscuit.png',
-    antenna: './img/antenna.jpg'
+    antenna: './img/antenna.jpg',
+    bgImg: './img/bgimg.jpg'
   }
 };
 var SCREEN_WIDTH = 465;
@@ -82,6 +83,7 @@ phina.define('MainScene', {
     this.superInit();
     // 背景色を指定
     this.backgroundColor = '#0F0';
+    this.bg = Bg().addChildTo(this);
     this.gauge = PowerGauge().addChildTo(this);
     this.oruga = Oruga().addChildTo(this);
     this.popBiscuit();
@@ -92,11 +94,23 @@ phina.define('MainScene', {
     if (p.getPointingStart()) {
       this.oruga.throw();
     }
+    if(this.antenna.checkHit(this.biscuit.x, this.biscuit.y)){
+
+    }
   },
   popBiscuit: function () {
     this.biscuit = Biscuit().addChildTo(this);
     this.biscuit.x = Random.randint(140, 340);
     this.biscuit.y = Random.randint(45, 295);
+  }
+});
+
+phina.define('Bg', {
+  superClass: 'Sprite',
+  init: function(){
+    this.superInit('bgImg', SCREEN_WIDTH, SCREEN_HEIGHT);
+    this.x = SCREEN_WIDTH / 2;
+    this.y = SCREEN_HEIGHT / 2;
   }
 });
 
@@ -207,6 +221,13 @@ phina.define('Antenna', {
   },
   setPosition: function () {
     this.antennaCnt = 0;
+  },
+  checkHit: function(x, y){
+    this.distance = Math.sqrt(Math.pow(this.x - x,2) + Math.pow(this.y - y,2));
+    if(this.distance < 30){
+      return true;
+    }
+    return false;
   }
 });
 
