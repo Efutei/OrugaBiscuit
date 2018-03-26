@@ -83,15 +83,23 @@ phina.define('MainScene', {
     this.backgroundColor = '#0F0';
     this.gauge = PowerGauge().addChildTo(this);
     this.oruga = Oruga().addChildTo(this);
+    this.popBiscuit();
   },
+  update: function(){
+  },
+  popBiscuit: function(){
+    this.biscuit = Biscuit().addChildTo(this);
+    this.biscuit.x = Random.randint(140, 340);
+    this.biscuit.y = Random.randint(45, 295);
+  }
 });
 
 phina.define('Oruga', {
   superClass: 'Sprite',
   init: function(){
-    this.superInit('oruga', 120, 250);
-    this.x = 110;
-    this.y = SCREEN_HEIGHT - 130;
+    this.superInit('oruga', 80, 200);
+    this.x = 90;
+    this.y = SCREEN_HEIGHT - 100;
   },
   update: function(){
   },
@@ -107,13 +115,15 @@ phina.define('Biscuit', {
   superClass: 'Sprite',
   init: function(){
     this.superInit('biscuit', 100, 100);
-    this.x = 30;
-    this.y = 30;
-  },
-  update: function(){
-  },
-  taken: function(){
-    return 0;
+  }
+});
+
+phina.define('BiscuitSpace', {
+  superClass: 'Sprite',
+  init: function(){
+    this.superInit('biscuit', 200, 250);
+    this.x = 240;
+    this.y = 170;
   }
 });
 
@@ -121,9 +131,9 @@ phina.define('PowerGauge', {
   superClass: 'CircleGauge',
   init: function(){
     this.superInit();
-    this.x = SCREEN_WIDTH - 140;
-    this.y = SCREEN_HEIGHT - 130;
-    this.radius = 120;
+    this.x = SCREEN_WIDTH - 200;
+    this.y = SCREEN_HEIGHT - 120;
+    this.radius = 100;
     this.maxValue = 100;
     this.value = 100;
     this.fill = 'skyblue';
