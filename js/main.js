@@ -134,6 +134,8 @@ phina.define('MainScene', {
     this.antenna = Antenna().addChildTo(this);
     this.animAntenna = FrameAnimation('antenna').attachTo(this.antenna);
     this.animAntenna.gotoAndPlay('rotation');
+    this.antenna.scaleX = 0.8;
+    this.antenna.scaleY = 0.8;
     this.scoreText = ScoreText().addChildTo(this);
     isAntennaThrown = false;
   },
@@ -249,7 +251,7 @@ phina.define('PowerGauge', {
 phina.define('Antenna', {
   superClass: 'Sprite',
   init: function () {
-    this.superInit('antenna', 60, 60);
+    this.superInit('antenna', 140, 140);
     this.setPosition();
     this.charged();
   },
@@ -282,7 +284,7 @@ phina.define('Antenna', {
   },
   checkHit: function(x, y){
     this.distance = Math.sqrt(Math.pow(this.x - x,2) + Math.pow(this.y - y,2));
-    if(this.distance < 60){
+    if(this.distance < 68){
       return true;
     }
     return false;
