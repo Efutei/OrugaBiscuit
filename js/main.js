@@ -6,7 +6,7 @@ var ASSETS = {
     startImage: './img/orugaface.png',
     oruga: './img/oruga_sprite.png',
     biscuit: './img/sweets_biscuit.png',
-    antenna: './img/antenna.jpg',
+    antenna: './img/tunotyakuramugattai.png',
     bgImg: './img/bgraido.png'
   },
   spritesheet: {
@@ -24,6 +24,24 @@ var ASSETS = {
         "oruga_charge": { // アニメーション名
           "frames": [0,1,2,3,4,5], // フレーム番号範囲
           "next": "oruga_charge", // 次のアニメーション
+          "frequency": 2, // アニメーション間隔
+        },
+      }
+    },
+    "antenna":
+    {
+      // フレーム情報
+      "frame": {
+        "width": 140, // 1フレームの画像サイズ（横）
+        "height": 140, // 1フレームの画像サイズ（縦）
+        "cols": 2, // フレーム数（横）
+        "rows": 1, // フレーム数（縦）
+      },
+      // アニメーション情報
+      "animations" : {
+        "rotation": { // アニメーション名
+          "frames": [0,1], // フレーム番号範囲
+          "next": "rotation", // 次のアニメーション
           "frequency": 2, // アニメーション間隔
         },
       }
@@ -112,9 +130,10 @@ phina.define('MainScene', {
     this.animOruga.gotoAndPlay('oruga_charge');
     this.oruga.scaleX = 0.8;
     this.oruga.scaleY = 0.8;
-    console.log(this.animOruga);
     this.popBiscuit();
     this.antenna = Antenna().addChildTo(this);
+    this.animAntenna = FrameAnimation('antenna').attachTo(this.antenna);
+    this.animAntenna.gotoAndPlay('rotation');
     this.scoreText = ScoreText().addChildTo(this);
     isAntennaThrown = false;
   },
