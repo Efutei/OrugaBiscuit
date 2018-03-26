@@ -3,7 +3,7 @@ phina.globalize();
 
 var ASSETS = {
   image: {
-    startImage: './img/startImage.jpg',
+    startImage: './img/orugaface.png',
     oruga: './img/oruga.jpg',
     biscuit: './img/sweets_biscuit.png',
     antenna: './img/antenna.jpg',
@@ -16,8 +16,8 @@ var score = 0;
 
 phina.define('StartImage', {
   superClass: 'Sprite',
-  init: function () {
-    this.superInit('startImage', 396, 428);
+  init: function(){
+      this.superInit('startImage', 700, 428);
     this.x = SCREEN_WIDTH / 2;
     this.y = SCREEN_WIDTH / 2 + 113;
   }
@@ -44,10 +44,10 @@ phina.define('TitleScene', {
             text: params.title,
             fill: params.fontColor,
             stroke: null,
-            fontSize: 64,
+            fontSize: 58,
           },
           x: this.gridX.center(),
-          y: this.gridY.span(1.8),
+          y: this.gridY.span(2.2),
         }
       }
     });
@@ -64,7 +64,7 @@ phina.define('TitleScene', {
               fontSize: 32,
             },
             x: this.gridX.center(),
-            y: this.gridY.span(14.8),
+            y: this.gridY.span(14.5),
           },
         },
       });
@@ -207,13 +207,18 @@ phina.define('Antenna', {
     this.thrown(1);
   },
   thrown: function (power) {
-    var deg = -Math.PI / 180 * 45;
-    var x = Math.cos(Math.PI + Math.PI * this.antennaCnt / 30) * 180,
-        y = Math.sin(Math.PI + Math.PI * this.antennaCnt / 30) * 110;
+    var deg = -Math.PI / 180 * 55;
+    var x = Math.cos(Math.PI * 1.2 + Math.PI * this.antennaCnt / 32) * 210,
+        y = Math.sin(Math.PI * 1.2 + Math.PI * this.antennaCnt / 32) * 140;
     var xx = Math.cos(deg) * x - Math.sin(deg) * y,
         yy = Math.sin(deg) * x + Math.cos(deg) * y;
     xx += 270, yy *= power, yy += 280 + (1 - power) * 150;
-    this.x = xx, this.y = yy;
+    if (this.antennaCnt < 51) {
+      this.x = xx, this.y = yy;
+    } else if (this.antennaCnt >= 51) {
+      if (this.antennaCnt == 51) this.vx = xx - this.x, this.vy = yy - this.y;
+      this.x += this.vx, this.y += this.vy;
+    }
     this.antennaCnt++;
   },
   setPosition: function () {
@@ -247,7 +252,7 @@ phina.define('ScoreText',{
 phina.main(function () {
   // アプリケーション生成
   var app = GameApp({
-    title: 'オルガとビスケット',
+    title: 'オルガと\nビスケット',
     startLabel: 'title',
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
