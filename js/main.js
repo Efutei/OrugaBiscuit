@@ -191,13 +191,18 @@ phina.define('Antenna', {
     this.thrown(1);
   },
   thrown: function (power) {
-    var deg = -Math.PI / 180 * 45;
-    var x = Math.cos(Math.PI + Math.PI * this.antennaCnt / 30) * 180,
-        y = Math.sin(Math.PI + Math.PI * this.antennaCnt / 30) * 110;
+    var deg = -Math.PI / 180 * 55;
+    var x = Math.cos(Math.PI * 1.2 + Math.PI * this.antennaCnt / 32) * 210,
+        y = Math.sin(Math.PI * 1.2 + Math.PI * this.antennaCnt / 32) * 140;
     var xx = Math.cos(deg) * x - Math.sin(deg) * y,
         yy = Math.sin(deg) * x + Math.cos(deg) * y;
     xx += 270, yy *= power, yy += 280 + (1 - power) * 150;
-    this.x = xx, this.y = yy;
+    if (this.antennaCnt < 51) {
+      this.x = xx, this.y = yy;
+    } else if (this.antennaCnt >= 51) {
+      if (this.antennaCnt == 51) this.vx = xx - this.x, this.vy = yy - this.y;
+      this.x += this.vx, this.y += this.vy;
+    }
     this.antennaCnt++;
   },
   setPosition: function () {
