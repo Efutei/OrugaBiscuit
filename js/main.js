@@ -15,15 +15,20 @@ var ASSETS = {
       // フレーム情報
       "frame": {
         "width": 210, // 1フレームの画像サイズ（横）
-        "height": 399, // 1フレームの画像サイズ（縦）
+        "height": 339, // 1フレームの画像サイズ（縦）
         "cols": 6, // フレーム数（横）
-        "rows": 1, // フレーム数（縦）
+        "rows": 2, // フレーム数（縦）
       },
       // アニメーション情報
       "animations" : {
         "oruga_charge": { // アニメーション名
           "frames": [0,1,2,3,4,5], // フレーム番号範囲
           "next": "oruga_charge", // 次のアニメーション
+          "frequency": 2, // アニメーション間隔
+        },
+        "oruga_throw": { // アニメーション名
+          "frames": [6,7,8,9,10], // フレーム番号範囲
+          "next": null, // 次のアニメーション
           "frequency": 2, // アニメーション間隔
         },
       }
@@ -150,7 +155,7 @@ phina.define('MainScene', {
   },
   clicked: function(){
     isAntennaThrown = true;
-    this.oruga.throw();
+    this.animOruga.gotoAndPlay('oruga_throw');
     this.antenna.setPosition();
     this.antenna.setPower(this.gauge.checkValue());
   },
@@ -178,13 +183,10 @@ phina.define('Oruga', {
   init: function () {
     this.superInit('oruga', 210, 399);
     this.x = 140;
-    this.y = SCREEN_HEIGHT - 100;
+    this.y = SCREEN_HEIGHT - 125;
   },
   update: function () {
-  },
-  throw: function () {
-    console.log("throw");
-  },
+  }
   charge: function () {
     return 0;
   }
