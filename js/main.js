@@ -165,7 +165,7 @@ phina.define('Bg', {
 phina.define('Oruga', {
   superClass: 'Sprite',
   init: function () {
-    this.superInit('oruga', 80, 200);
+    this.superInit('oruga', 210, 399);
     this.x = 140;
     this.y = SCREEN_HEIGHT - 100;
   },
