@@ -33,6 +33,7 @@ var ASSETS = {
 var SCREEN_WIDTH = 465;
 var SCREEN_HEIGHT = 665;
 var score = 0;
+var isAntennaThrown = false;
 
 phina.define('StartImage', {
   superClass: 'Sprite',
@@ -115,14 +116,15 @@ phina.define('MainScene', {
     this.popBiscuit();
     this.antenna = Antenna().addChildTo(this);
     this.scoreText = ScoreText().addChildTo(this);
+    isAntennaThrown = false;
   },
   update: function (app) {
     var p = app.pointer;
-    if (p.getPointingStart()) {
+    if (p.getPointingStart() && !isAntennaThrown) {
       this.oruga.throw();
     }
     if(this.antenna.checkHit(this.biscuit.x, this.biscuit.y)){
-
+      this.biscuit.remove();
     }
   },
   popBiscuit: function () {
@@ -161,7 +163,7 @@ phina.define('Oruga', {
 phina.define('Biscuit', {
   superClass: 'Sprite',
   init: function () {
-    this.superInit('biscuit', 80, 80);
+    this.superInit('biscuit', 60, 60);
   }
 });
 
@@ -225,15 +227,15 @@ phina.define('PowerGauge', {
 phina.define('Antenna', {
   superClass: 'Sprite',
   init: function () {
-    this.superInit('antenna', 80, 80);
+    this.superInit('antenna', 60, 60);
     this.setPosition();
     this.charged();
   },
   update: function () {
-    if(this.x == 60){
+    if(this.x == 60&&false){
       this.charged();
     }
-    if(false){
+    if(true){
       this.thrown(1);
     }
   },
@@ -258,7 +260,7 @@ phina.define('Antenna', {
   },
   checkHit: function(x, y){
     this.distance = Math.sqrt(Math.pow(this.x - x,2) + Math.pow(this.y - y,2));
-    if(this.distance < 30){
+    if(this.distance < 60){
       return true;
     }
     return false;
