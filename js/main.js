@@ -62,7 +62,7 @@ var SCREEN_WIDTH = 465;
 var SCREEN_HEIGHT = 665;
 var score = 0;
 var isAntennaThrown = false;
-var getBiscket = false;
+var getBiscuit = false;
 
 phina.define('StartImage', {
   superClass: 'Sprite',
@@ -161,7 +161,7 @@ phina.define('MainScene', {
       }
     }
     if(this.antenna.checkHit(this.biscuit.x, this.biscuit.y)){
-      if(!getBiscket){
+      if(!getBiscuit){
         score += 1;
         getBiscuit = true;
       }
@@ -179,7 +179,7 @@ phina.define('MainScene', {
     if(this.antenna.x > 175 && this.antenna.x < 225){
       this.antenna.goTofinger();
       isAntennaThrown = false;
-      getBiscket = false;
+      getBiscuit = false;
     }
   },
   popBiscuit: function () {
