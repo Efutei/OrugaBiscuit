@@ -3,7 +3,7 @@ phina.globalize();
 
 var ASSETS = {
   image: {
-    startImage: './img/startImage.jpg',
+    startImage: './img/orugaface.png',
     oruga: './img/oruga.jpg',
     biscuit: './img/sweets_biscuit.png',
     antenna: './img/antenna.jpg'
@@ -15,7 +15,7 @@ var SCREEN_HEIGHT = 665;
 phina.define('StartImage', {
   superClass: 'Sprite',
   init: function(){
-    this.superInit('startImage', 396, 428);
+      this.superInit('startImage', 700, 428);
     this.x = SCREEN_WIDTH / 2;
     this.y = SCREEN_WIDTH / 2 + 113;
   }
@@ -42,10 +42,10 @@ phina.define('TitleScene', {
             text: params.title,
             fill: params.fontColor,
             stroke: null,
-            fontSize: 64,
+            fontSize: 58,
           },
           x: this.gridX.center(),
-          y: this.gridY.span(1.8),
+          y: this.gridY.span(2.2),
         }
       }
     });
@@ -62,7 +62,7 @@ phina.define('TitleScene', {
               fontSize: 32,
             },
             x: this.gridX.center(),
-            y: this.gridY.span(14.8),
+            y: this.gridY.span(14.5),
           },
         },
       });
@@ -207,7 +207,7 @@ phina.define('Antenna', {
 phina.main(function() {
   // アプリケーション生成
   var app = GameApp({
-    title: 'オルガとビスケット',
+    title: 'オルガと\nビスケット',
     startLabel: 'title',
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
