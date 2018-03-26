@@ -134,8 +134,8 @@ phina.define('MainScene', {
     this.antenna = Antenna().addChildTo(this);
     this.animAntenna = FrameAnimation('antenna').attachTo(this.antenna);
     this.animAntenna.gotoAndPlay('rotation');
-    this.antenna.scaleX = 0.8;
-    this.antenna.scaleY = 0.8;
+    this.antenna.scaleX = 0.5;
+    this.antenna.scaleY = 0.5;
     this.scoreText = ScoreText().addChildTo(this);
     isAntennaThrown = false;
   },
@@ -284,7 +284,7 @@ phina.define('Antenna', {
   },
   checkHit: function(x, y){
     this.distance = Math.sqrt(Math.pow(this.x - x,2) + Math.pow(this.y - y,2));
-    if(this.distance < 68){
+    if(this.distance < 65){
       return true;
     }
     return false;
