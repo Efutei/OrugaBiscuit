@@ -167,6 +167,16 @@ phina.define('MainScene', {
       }
       this.biscuit.remove();
     }
+    if(this.antenna.x > this.biscuit.x){
+      faraway = true;
+    }
+    if(faraway && this.antenna.x < 75){
+      this.exit({
+        score: score,
+        message:　"止まるんじゃねぇぞ...",
+        hashtags: 'オルガとビスケット'
+      });
+    }
   },
   clickThrow: function(){
     isAntennaThrown = true;
