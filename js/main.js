@@ -7,7 +7,8 @@ var ASSETS = {
     oruga: './img/oruga_sprite.png',
     biscuit: './img/sweets_biscuit.png',
     antenna: './img/tunotyakuramugattai.png',
-    bgImg: './img/bgraido.png'
+    bgImg: './img/bgraido.png',
+    mark: './img/mark_exclamation.png'
   },
   spritesheet: {
     "oruga":
@@ -148,6 +149,8 @@ phina.define('MainScene', {
     this.animAntenna.gotoAndPlay('rotation');
     this.antenna.scaleX = 0.5;
     this.antenna.scaleY = 0.5;
+    this.mark = Mark().addChildTo(this);
+    this.mark.alpha = 0;
     this.scoreText = ScoreText().addChildTo(this);
     isAntennaThrown = false;
     getBiscuit = false;
@@ -173,6 +176,11 @@ phina.define('MainScene', {
     if(this.antenna.x > this.biscuit.x){
       faraway = true;
     }
+    if(faraway && this.checkAntennaInHitbox()){
+      this.mark.alpha = 1;
+    }else{
+      this.mark.alpha = 0;
+    }
     if(faraway && this.antenna.x < 75){
       this.exit({
         score: score,
@@ -189,7 +197,7 @@ phina.define('MainScene', {
   },
   clickCatch: function(){
     this.animOruga.gotoAndPlay('oruga_catch');
-    if(this.antenna.x > 175 && this.antenna.x < 240){
+    if(faraway && this.checkAntennaInHitbox()){
       if(getBiscuit){
         this.popBiscuit();
       }
@@ -207,6 +215,9 @@ phina.define('MainScene', {
     this.biscuit.y = y + Math.sin(rnd1) * 125 * rnd2;
     /*this.biscuit.x = Random.randint(140, 340);
     this.biscuit.y = Random.randint(45, 295);*/
+  },
+  checkAntennaInHitbox: function(){
+    return this.antenna.x > 175 && this.antenna.x < 240;
   }
 });
 
@@ -246,6 +257,16 @@ phina.define('BiscuitSpace', {
     this.superInit('biscuit', 50, 250);
     this.x = 200;
     this.y = 170;
+  }
+});
+
+phina.define('Mark', {
+  superClass: 'Sprite',
+  init: function () {
+    this.superInit('mark', 60, 60);
+    this.alpha = 0;
+    this.x = 155;
+    this.y = SCREEN_HEIGHT - 265;
   }
 });
 
