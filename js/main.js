@@ -298,7 +298,7 @@ phina.define('PowerGauge', {
     }
   },
   checkValue: function(){
-    return this.value / 100;
+    return this.value / 125 + 0.2;
   }
 });
 
