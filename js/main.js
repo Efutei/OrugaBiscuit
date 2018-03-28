@@ -62,6 +62,7 @@ var SCREEN_WIDTH = 465;
 var SCREEN_HEIGHT = 665;
 var score = 0;
 var isAntennaThrown = false;
+var faraway = false;
 var getBiscuit = false;
 
 phina.define('StartImage', {
@@ -150,6 +151,8 @@ phina.define('MainScene', {
     this.scoreText = ScoreText().addChildTo(this);
     isAntennaThrown = false;
     getBiscuit = false;
+    faraway = false;
+    score = 0;
   },
   update: function (app) {
     var p = app.pointer;
@@ -186,10 +189,15 @@ phina.define('MainScene', {
   },
   clickCatch: function(){
     this.animOruga.gotoAndPlay('oruga_catch');
-    if(this.antenna.x > 175 && this.antenna.x < 225){
+    if(this.antenna.x > 175 && this.antenna.x < 240){
+      if(getBiscuit){
+        this.popBiscuit();
+      }
       this.antenna.goTofinger();
       isAntennaThrown = false;
       getBiscuit = false;
+      faraway = false;
+      this.antenna.speed += 0.1;
     }
   },
   popBiscuit: function () {
