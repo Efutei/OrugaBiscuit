@@ -236,11 +236,6 @@ phina.define('Oruga', {
     this.superInit('oruga', 210, 399);
     this.x = 140;
     this.y = SCREEN_HEIGHT - 125;
-  },
-  update: function () {
-  },
-  charge: function () {
-    return 0;
   }
 });
 
