@@ -246,15 +246,6 @@ phina.define('Biscuit', {
   }
 });
 
-phina.define('BiscuitSpace', {
-  superClass: 'Sprite',
-  init: function () {
-    this.superInit('biscuit', 50, 250);
-    this.x = 200;
-    this.y = 170;
-  }
-});
-
 phina.define('Mark', {
   superClass: 'Sprite',
   init: function () {
