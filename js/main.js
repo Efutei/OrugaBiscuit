@@ -217,7 +217,7 @@ phina.define('MainScene', {
     this.biscuit.y = Random.randint(45, 295);*/
   },
   checkAntennaInHitbox: function(){
-    return this.antenna.x > 175 && this.antenna.x < 240;
+    return this.antenna.x > 175 && this.antenna.x < 240 && this.antenna.y > SCREEN_HEIGHT - 315;
   }
 });
 
