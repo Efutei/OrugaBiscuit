@@ -257,18 +257,21 @@ phina.define('Mark', {
 });
 
 phina.define('PowerGauge', {
-  superClass: 'CircleGauge',
+  superClass: 'Gauge',
   init: function () {
     this.superInit();
-    this.x = SCREEN_WIDTH - 120;
+    this.x = SCREEN_WIDTH - 200;
     this.y = SCREEN_HEIGHT - 120;
-    this.radius = 60;
+    this.width = 120;
+    this.height = 30;
+    this.cornerRadius = 10;
     this.maxValue = 100;
     this.value = 100;
     this.fill = 'skyblue';
     this.stroke = 'silver';
     this.strokeWidth = 5;
     this.gaugeUp = false;
+    this.rotation = 270;
   },
   update: function () {
     if(!isAntennaThrown){
