@@ -131,6 +131,10 @@ phina.define('TitleScene', {
 
 });
 
+function getRank(json){
+  console.log(json);
+  thisResult.messageLabel.text = "Rank: " + json.rank + " / " + json.total; 
+}
 // MainScene クラスを定義
 phina.define('MainScene', {
   superClass: 'DisplayScene',
@@ -183,7 +187,8 @@ phina.define('MainScene', {
     }else{
       this.mark.alpha = 0;
     }
-    if(faraway && this.antenna.x < 75){
+    if(faraway && this.antenna.x < 0){
+      postRank(score, "noname", getRank);
       this.exit({
         score: score,
         message:　"止まるんじゃねぇぞ...",
