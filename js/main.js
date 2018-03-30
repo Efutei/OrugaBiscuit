@@ -8,7 +8,8 @@ var ASSETS = {
     biscuit: './img/sweets_biscuit.png',
     antenna: './img/tunotyakuramugattai.png',
     bgImg: './img/bgraido.png',
-    mark: './img/mark_exclamation.png'
+    mark: './img/mark_exclamation.png',
+    gameOverImage: './img/gameOver.png'
   },
   spritesheet: {
     "oruga":
@@ -65,6 +66,7 @@ var score = 0;
 var isAntennaThrown = false;
 var faraway = false;
 var getBiscuit = false;
+var thisResult;
 
 phina.define('StartImage', {
   superClass: 'Sprite',
@@ -396,6 +398,115 @@ phina.define('ScoreText',{
     this.text = "Score: " + score + " ";
     this.x = SCREEN_WIDTH - (this.width + 40);
   }
+});
+
+phina.define('GameOverImage', {
+  superClass: 'Sprite',
+  init: function(){
+    this.superInit('gameOverImage', 400, 300);
+    this.x = SCREEN_WIDTH / 2;
+    this.y = SCREEN_WIDTH / 2 + 100;
+  }
+});
+
+// リザルトシーン上書き
+phina.define('ResultScene', {
+  superClass: 'DisplayScene',
+  /**
+   * @constructor
+   */
+  init: function(params) {
+    params = ({}).$safe(params, phina.game.ResultScene.defaults);
+    this.superInit(params);
+
+    var message = params.message.format(params);
+
+    this.backgroundColor = params.backgroundColor;
+    thisResult = this;
+    this.gameOverImage = GameOverImage().addChildTo(this);
+
+    this.fromJSON({
+      children: {
+        scoreText: {
+          className: 'phina.display.Label',
+          arguments: {
+            text: 'Score: '+params.score,
+            fill: params.fontColor,
+            stroke: null,
+            fontSize: 64,
+          },
+          x: this.gridX.span(8),
+          y: this.gridY.span(1.5),
+        },
+
+        messageLabel: {
+          className: 'phina.display.Label',
+          arguments: {
+            text: message,
+            fill: params.fontColor,
+            stroke: null,
+            fontSize: 32,
+          },
+          x: this.gridX.span(8),
+          y: this.gridY.span(3.5),
+        },
+
+        shareButton: {
+          className: 'phina.ui.Button',
+          arguments: [{
+            text: '★',
+            width: 128,
+            height: 128,
+            fontColor: params.fontColor,
+            fontSize: 50,
+            cornerRadius: 64,
+            fill: 'rgba(240, 240, 240, 0.5)',
+            // stroke: '#aaa',
+            // strokeWidth: 2,
+          }],
+          x: this.gridX.center(-3),
+          y: this.gridY.span(14),
+        },
+        playButton: {
+          className: 'phina.ui.Button',
+          arguments: [{
+            text: '▶',
+            width: 128,
+            height: 128,
+            fontColor: params.fontColor,
+            fontSize: 50,
+            cornerRadius: 64,
+            fill: 'rgba(240, 240, 240, 0.5)',
+            // stroke: '#aaa',
+            // strokeWidth: 2,
+          }],
+          x: this.gridX.center(3),
+          y: this.gridY.span(14),
+
+          interactive: true,
+          onpush: function() {
+            this.exit();
+          }.bind(this),
+        },
+      }
+    });
+
+    if (params.exitType === 'touch') {
+      this.on('pointend', function() {
+        this.exit();
+      });
+    }
+
+    this.shareButton.onclick = function() {
+      var text;
+      var url = phina.social.Twitter.createURL({
+        text: text,
+        hashtags: params.hashtags,
+        url: params.url,
+      });
+      window.open(url, 'share window', 'width=480, height=320');
+    };
+  },
 });
 
 // メイン処理
