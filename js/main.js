@@ -153,7 +153,7 @@ phina.define("HowtoScene", {
     howto.scaleY = 1.5;
   },
   update: function(){
-    if(firstPlay){
+    if(!firstPlay){
       this.exit();
     }
   },
@@ -198,6 +198,7 @@ phina.define('MainScene', {
     SoundManager.setVolumeMusic(0.01);
     SoundManager.playMusic('bgm');
     gotRank = false;
+    firstPlay = false;
   },
   update: function (app) {
     var p = app.pointer;
