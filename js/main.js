@@ -72,6 +72,7 @@ var isAntennaThrown = false;
 var faraway = false;
 var getBiscuit = false;
 var thisResult;
+var gotRank = false;
 
 phina.define('StartImage', {
   superClass: 'Sprite',
@@ -138,7 +139,8 @@ phina.define('TitleScene', {
 
 function getRank(json){
   console.log(json);
-  thisResult.messageLabel.text = "Rank: " + json.rank + " / " + json.total; 
+  gotRank = true;
+  thisResult.messageLabel.text = "Rank: " + json.rank + " / " + json.total;
 }
 // MainScene クラスを定義
 phina.define('MainScene', {
@@ -170,6 +172,7 @@ phina.define('MainScene', {
     SoundManager.setVolume(0.2);
     SoundManager.setVolumeMusic(0.01);
     SoundManager.playMusic('bgm');
+    gotRank = false;
   },
   update: function (app) {
     var p = app.pointer;
@@ -517,6 +520,11 @@ phina.define('ResultScene', {
 
     this.shareButton.onclick = function() {
       var text;
+      if(gotRank){
+        text = 'Score: {0}\n{1}\n{2}\n'.format(params.score, this.parent.messageLabel.text, "止まるんじゃねぇぞ...");
+      }else{
+        text = 'Score: {0}\n{1}\n'.format(params.score, "止まるんじゃねぇぞ...");
+      }
       var url = phina.social.Twitter.createURL({
         text: text,
         hashtags: params.hashtags,
