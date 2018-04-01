@@ -9,7 +9,8 @@ var ASSETS = {
     antenna: './img/tunotyakuramugattai.png',
     bgImg: './img/bg.png',
     mark: './img/mark_exclamation.png',
-    gameOverImage: './img/dontstop.jpg'
+    gameOverImage: './img/dontstop.jpg',
+    howto: './img/howto.png'
   },
   sound: {
     hit: './sound/catch.mp3',
@@ -73,6 +74,7 @@ var faraway = false;
 var getBiscuit = false;
 var thisResult;
 var gotRank = false;
+var firstPlay = true;
 
 phina.define('StartImage', {
   superClass: 'Sprite',
@@ -135,6 +137,29 @@ phina.define('TitleScene', {
     }
   }
 
+});
+
+phina.define("HowtoScene", {
+  superClass: 'DisplayScene',
+  init: function() {
+    this.superInit();
+
+    this.backgroundColor = '#0F0';
+    this.bg = Bg().addChildTo(this);
+    var howto = Sprite('howto', 266, 263).addChildTo(this);
+    howto.x = SCREEN_WIDTH / 2;
+    howto.y = SCREEN_HEIGHT / 2;
+    howto.scaleX = 1.5;
+    howto.scaleY = 1.5;
+  },
+  update: function(){
+    if(firstPlay){
+      this.exit();
+    }
+  },
+  onpointstart: function() {
+    this.exit();
+  },
 });
 
 function getRank(json){
@@ -540,12 +565,34 @@ phina.main(function () {
   // アプリケーション生成
   var app = GameApp({
     title: 'オルガと\nビスケット',
-    startLabel: 'title',
+    startLabel: 'titleScene',
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     assets: ASSETS,
     fontColor: '#663333',
     backgroundColor: '#009966',
+    scenes: [
+      {
+        className: 'TitleScene',
+        label: 'titleScene',
+        nextLabel: 'howtoScene',
+      },
+      {
+        className: 'HowtoScene',
+        label: 'howtoScene',
+        nextLabel: 'mainScene',
+      },
+      {
+        className: 'MainScene',
+        label: 'mainScene',
+        nextLabel: 'resultScene',
+      },
+      {
+        className: 'ResultScene',
+        label: 'resultScene',
+        nextLabel: 'titleScene',
+      },
+    ]
   });
   //iphone用ダミー音
   app.domElement.addEventListener('touchend', function dummy() {
