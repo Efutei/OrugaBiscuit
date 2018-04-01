@@ -222,7 +222,7 @@ phina.define('MainScene', {
     if(this.antenna.x > this.biscuit.x){
       faraway = true;
     }
-    if(faraway && this.checkAntennaInHitbox()){
+    if(faraway && this.checkMarkPoint()){
       this.mark.alpha = 1;
     }else{
       this.mark.alpha = 0;
@@ -268,6 +268,9 @@ phina.define('MainScene', {
   },
   checkAntennaInHitbox: function(){
     return this.antenna.x > 175 && this.antenna.x < 240 && this.antenna.y > SCREEN_HEIGHT - 315;
+  },
+  checkMarkPoint: function(){
+    return this.antenna.x > 175 && this.antenna.x < 250 && this.antenna.y > SCREEN_HEIGHT - 315;
   }
 });
 
