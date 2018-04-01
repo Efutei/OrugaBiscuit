@@ -10,7 +10,8 @@ var ASSETS = {
     bgImg: './img/bg.png',
     mark: './img/mark_exclamation.png',
     gameOverImage: './img/dontstop.jpg',
-    howto: './img/howto.png'
+    howto: './img/howto.png',
+    griffon: './img/biscuit_gundam.png'
   },
   sound: {
     hit: './sound/catch.mp3',
@@ -259,7 +260,11 @@ phina.define('MainScene', {
     }
   },
   popBiscuit: function () {
-    this.biscuit = Biscuit().addChildTo(this);
+    if(Random.randint(0,9) == 0){
+      this.biscuit = Griffon().addChildTo(this);
+    }else{
+      this.biscuit = Biscuit().addChildTo(this);
+    }
     var x = 300, y = 170, rnd1 = Math.random() * Math.PI * 2, rnd2 = Math.random();
     this.biscuit.x = x + Math.cos(rnd1) * 100 * rnd2;
     this.biscuit.y = y + Math.sin(rnd1) * 125 * rnd2;
@@ -296,6 +301,13 @@ phina.define('Biscuit', {
   superClass: 'Sprite',
   init: function () {
     this.superInit('biscuit', 60, 60);
+  }
+});
+
+phina.define('Griffon', {
+  superClass: 'Sprite',
+  init: function () {
+    this.superInit('griffon', 80, 80);
   }
 });
 
