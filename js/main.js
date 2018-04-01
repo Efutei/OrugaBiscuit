@@ -9,7 +9,12 @@ var ASSETS = {
     antenna: './img/tunotyakuramugattai.png',
     bgImg: './img/bgraido.png',
     mark: './img/mark_exclamation.png',
-    gameOverImage: './img/gameOver.png'
+    gameOverImage: './img/dontstop.jpg'
+  },
+  sound: {
+    hit: './sound/catch.mp3',
+    bgm: './sound/Survivor.mp3',
+    dead: './sound/dead.mp3'
   },
   spritesheet: {
     "oruga":
@@ -162,6 +167,9 @@ phina.define('MainScene', {
     getBiscuit = false;
     faraway = false;
     score = 0;
+    SoundManager.setVolume(0.2);
+    SoundManager.setVolumeMusic(0.01);
+    SoundManager.playMusic('bgm');
   },
   update: function (app) {
     var p = app.pointer;
@@ -176,6 +184,7 @@ phina.define('MainScene', {
       if(!getBiscuit){
         score += 1;
         getBiscuit = true;
+        SoundManager.play('hit');
       }
       this.biscuit.remove();
     }
@@ -189,6 +198,7 @@ phina.define('MainScene', {
     }
     if(faraway && this.antenna.x < 0){
       postRank(score, "noname", getRank);
+      SoundManager.stopMusic();
       this.exit({
         score: score,
         message:　"止まるんじゃねぇぞ...",
@@ -429,6 +439,8 @@ phina.define('ResultScene', {
     this.backgroundColor = params.backgroundColor;
     thisResult = this;
     this.gameOverImage = GameOverImage().addChildTo(this);
+    SoundManager.setVolumeMusic(0.2);
+    SoundManager.playMusic('dead',1000,false);
 
     this.fromJSON({
       children: {
@@ -490,6 +502,7 @@ phina.define('ResultScene', {
 
           interactive: true,
           onpush: function() {
+            SoundManager.stopMusic();
             this.exit();
           }.bind(this),
         },
