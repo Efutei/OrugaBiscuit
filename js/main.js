@@ -10,7 +10,8 @@ var ASSETS = {
     bgImg: './img/bg.png',
     mark: './img/mark_exclamation.png',
     gameOverImage: './img/dontstop.jpg',
-    howto: './img/howto.png'
+    howto: './img/howto.png',
+    griffon: './img/biscuit_gundam.png'
   },
   sound: {
     hit: './sound/catch.mp3',
@@ -222,7 +223,7 @@ phina.define('MainScene', {
     if(this.antenna.x > this.biscuit.x){
       faraway = true;
     }
-    if(faraway && this.checkAntennaInHitbox()){
+    if(faraway && this.checkMarkPoint()){
       this.mark.alpha = 1;
     }else{
       this.mark.alpha = 0;
@@ -259,7 +260,11 @@ phina.define('MainScene', {
     }
   },
   popBiscuit: function () {
-    this.biscuit = Biscuit().addChildTo(this);
+    if(Random.randint(0,9) == 0){
+      this.biscuit = Griffon().addChildTo(this);
+    }else{
+      this.biscuit = Biscuit().addChildTo(this);
+    }
     var x = 300, y = 170, rnd1 = Math.random() * Math.PI * 2, rnd2 = Math.random();
     this.biscuit.x = x + Math.cos(rnd1) * 100 * rnd2;
     this.biscuit.y = y + Math.sin(rnd1) * 125 * rnd2;
@@ -268,6 +273,9 @@ phina.define('MainScene', {
   },
   checkAntennaInHitbox: function(){
     return this.antenna.x > 175 && this.antenna.x < 240 && this.antenna.y > SCREEN_HEIGHT - 315;
+  },
+  checkMarkPoint: function(){
+    return this.antenna.x > 175 && this.antenna.x < 250 && this.antenna.y > SCREEN_HEIGHT - 315;
   }
 });
 
@@ -293,6 +301,13 @@ phina.define('Biscuit', {
   superClass: 'Sprite',
   init: function () {
     this.superInit('biscuit', 60, 60);
+  }
+});
+
+phina.define('Griffon', {
+  superClass: 'Sprite',
+  init: function () {
+    this.superInit('griffon', 80, 80);
   }
 });
 
