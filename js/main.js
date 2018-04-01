@@ -15,7 +15,8 @@ var ASSETS = {
   sound: {
     hit: './sound/catch.mp3',
     bgm: './sound/Survivor.mp3',
-    dead: './sound/dead.mp3'
+    dead: './sound/dead.mp3',
+    roar: './sound/roar.mp3'
   },
   spritesheet: {
     "oruga":
@@ -213,6 +214,7 @@ phina.define('MainScene', {
       if(!getBiscuit){
         score += 1;
         getBiscuit = true;
+        SoundManager.setVolume(0.2);
         SoundManager.play('hit');
       }
       this.biscuit.remove();
@@ -240,6 +242,8 @@ phina.define('MainScene', {
     this.animOruga.gotoAndPlay('oruga_throw');
     this.antenna.setPosition();
     this.antenna.setPower(this.gauge.checkValue());
+    SoundManager.setVolume(0.05);
+    SoundManager.play('roar');
   },
   clickCatch: function(){
     this.animOruga.gotoAndPlay('oruga_catch');
