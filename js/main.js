@@ -7,7 +7,7 @@ var ASSETS = {
     oruga: './img/oruga_sprite.png',
     biscuit: './img/sweets_biscuit.png',
     antenna: './img/tunotyakuramugattai.png',
-    bgImg: './img/bgraido.png',
+    bgImg: './img/bg.png',
     mark: './img/mark_exclamation.png',
     gameOverImage: './img/dontstop.jpg'
   },
