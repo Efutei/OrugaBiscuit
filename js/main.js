@@ -196,8 +196,8 @@ phina.define('MainScene', {
     getBiscuit = false;
     faraway = false;
     score = 0;
-    SoundManager.setVolume(0.2);
-    SoundManager.setVolumeMusic(0.01);
+    SoundManager.setVolume(0.4);
+    SoundManager.setVolumeMusic(0.02);
     SoundManager.playMusic('bgm');
     gotRank = false;
     firstPlay = false;
@@ -243,7 +243,7 @@ phina.define('MainScene', {
     this.animOruga.gotoAndPlay('oruga_throw');
     this.antenna.setPosition();
     this.antenna.setPower(this.gauge.checkValue());
-    SoundManager.setVolume(0.05);
+    SoundManager.setVolume(0.1);
     SoundManager.play('roar');
   },
   clickCatch: function(){
@@ -487,7 +487,7 @@ phina.define('ResultScene', {
     this.backgroundColor = params.backgroundColor;
     thisResult = this;
     this.gameOverImage = GameOverImage().addChildTo(this);
-    SoundManager.setVolumeMusic(0.2);
+    SoundManager.setVolumeMusic(0.4);
     SoundManager.playMusic('dead',1000,false);
 
     this.fromJSON({
