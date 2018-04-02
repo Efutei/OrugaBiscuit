@@ -197,7 +197,7 @@ phina.define('MainScene', {
     faraway = false;
     score = 0;
     SoundManager.setVolume(0.8);
-    SoundManager.setVolumeMusic(0.1);
+    SoundManager.setVolumeMusic(0.06);
     SoundManager.playMusic('bgm');
     gotRank = false;
     firstPlay = false;
