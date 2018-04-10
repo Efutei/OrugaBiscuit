@@ -199,7 +199,6 @@ phina.define('MainScene', {
     SoundManager.setVolume(0.8);
     SoundManager.setVolumeMusic(0.1);
     SoundManager.playMusic('bgm');
-    gotRank = false;
     firstPlay = false;
   },
   update: function (app) {
@@ -486,6 +485,7 @@ phina.define('ResultScene', {
 
     this.backgroundColor = params.backgroundColor;
     thisResult = this;
+    gotRank = false;
     this.gameOverImage = GameOverImage().addChildTo(this);
     SoundManager.setVolumeMusic(0.8);
     SoundManager.playMusic('dead',1000,false);
